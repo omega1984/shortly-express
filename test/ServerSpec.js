@@ -13,11 +13,12 @@ var port = 4568;
 // Remove the 'x' from beforeEach block when working on
 // authentication tests.
 /************************************************************/
-var xbeforeEach = function() {};
+// var beforeEach = function() {};
 /************************************************************/
 
 
 describe('', function() {
+  console.log('INSIDE describe()');
   var db;
   var server;
 
@@ -39,10 +40,12 @@ describe('', function() {
     /* TODO: Update user and password if different than on your local machine            */
     /*************************************************************************************/
     db = mysql.createConnection({
+      server: 'localhost',
       user: 'student',
       password: 'student',
       database: 'shortly'
     });
+    console.log(`db after createConnection ${db}`);
 
     /**************************************************************************************/
     /* TODO: If you create a new MySQL tables, add it to the tablenames collection below. */
@@ -58,11 +61,15 @@ describe('', function() {
       });
     });
 
+    console.log(`After db.connect inside beforeEach---${db}`);
+
     afterEach(function() { server.close(); });
   });
 
   describe('Database Schema:', function() {
+    console.log(`INSIDE DESCRIBE ---${db}`);
     it('contains a users table', function(done) {
+      console.log(`INSIDE IT, ${db}`);
       var queryString = 'SELECT * FROM users';
       db.query(queryString, function(err, results) {
         if (err) { return done(err); }
@@ -597,7 +604,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Link creation:', function() {
+  describe('Link creation:', function() {
 
     var cookies = request.jar();
     var requestWithSession = request.defaults({ jar: cookies });
@@ -610,7 +617,7 @@ describe('', function() {
       }
     };
 
-    xbeforeEach(function(done) {
+    beforeEach(function(done) {
       var options = {
         'method': 'POST',
         'followAllRedirects': true,
