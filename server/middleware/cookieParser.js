@@ -1,12 +1,16 @@
 const parseCookies = (req, res, next) => {
-  var kookie = {};
   console.log(JSON.stringify(req.headers));
   if (!req.headers.cookie) {
-    // res.send({});
     next();
   } else {
-    var headerArr = req.headers.cookie.split('=') // ['shortlyid', '32u2983']
-    kookie[headerArr[0]] = headerArr[1]
+    var kookie1 = req.headers.Cookie.split('; ');
+
+    if (kookie1 !== undefined ) {
+      var kookie = req.headers.Cookie.split('; ').cookie1.reduce( (obj, item) => {
+        obj[item.split('=')[0]] = item.split('=')[1];
+        return obj;
+      }, {});
+    }
     req.cookies = kookie;
     res.send();
     next();

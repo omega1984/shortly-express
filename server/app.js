@@ -77,6 +77,11 @@ app.post('/links',
 /************************************************************/
 // Write your authentication routes here
 /************************************************************/
+app.get('/signup',
+  (req, res) => {
+    res.render('signup');
+  });
+
 app.post('/signup',
   (req, res, next) => {
     var usernameInput = req.body.username;
@@ -102,6 +107,11 @@ app.post('/signup',
         }
       })
   }); // app.post
+
+app.get('/login',
+(req, res) => {
+  res.render('login');
+});
 
 app.post('/login',
   (req, res, next) => {
