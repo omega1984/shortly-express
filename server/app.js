@@ -110,17 +110,12 @@ app.post('/login',
 
     models.Users.get({ username })
     .then(result => {
-      // HASH from Database
-      // console.log(`1 ${password}`)
-      // console.log(`2 ${result.password}`)
-
       // if username doesn't exist
       if (result) {
         // if password is incorrect
         if (models.Users.compare( password, result.password, result.salt ) === false) {
           res.set('location', '/login');
           res.send('Incorrect password.');
-
           // Password sucessful
         } else {
           models.Users.compare( password, result.password, result.salt );
@@ -131,7 +126,6 @@ app.post('/login',
         res.set('location', '/login');
         res.send('Username does not exist.')
       }
-
     });
   }); // app.post
 
