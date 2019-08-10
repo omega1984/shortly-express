@@ -50,17 +50,17 @@ class Model {
    * error that occurred during the query. Note that even if multiple objects match
    * the conditions provided, only one will be provided upon fulfillment.
    */
-  // get(options) {
-  //   let parsedOptions = parseData(options);
-  //   let queryString = `SELECT * FROM ${this.tablename} WHERE ${parsedOptions.string.join(' AND ')} LIMIT 1`;
-  //   return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
-  // }
-  get(options, columns = '') {
+  get(options) {
     let parsedOptions = parseData(options);
-    let parsedColumns = columns === '' ? '*' : columns;
-    let queryString = `SELECT ${parsedColumns} FROM ${this.tablename} WHERE ${parsedOptions.string.join(' AND ')} LIMIT 1`;
+    let queryString = `SELECT * FROM ${this.tablename} WHERE ${parsedOptions.string.join(' AND ')} LIMIT 1`;
     return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
   }
+  // get(options, columns = '') {
+  //   let parsedOptions = parseData(options);
+  //   let parsedColumns = columns === '' ? '*' : columns;
+  //   let queryString = `SELECT ${parsedColumns} FROM ${this.tablename} WHERE ${parsedOptions.string.join(' AND ')} LIMIT 1`;
+  //   return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
+  // }
 
   /**
    * Creates a new record in the table.

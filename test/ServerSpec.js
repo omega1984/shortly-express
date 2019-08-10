@@ -5,7 +5,7 @@ var httpMocks = require('node-mocks-http');
 
 var app = require('../server/app.js');
 var schema = require('../server/db/config.js');
-var port = 4568;
+var port = 3000; // changed from 4568
 
 /************************************************************/
 // Mocha doesn't have a way to designate pending before blocks.
@@ -18,7 +18,6 @@ var port = 4568;
 
 
 describe('', function() {
-  console.log('INSIDE describe()');
   var db;
   var server;
 
@@ -45,7 +44,6 @@ describe('', function() {
       password: 'student',
       database: 'shortly'
     });
-    console.log(`db after createConnection ${db}`);
 
     /**************************************************************************************/
     /* TODO: If you create a new MySQL tables, add it to the tablenames collection below. */
@@ -61,15 +59,11 @@ describe('', function() {
       });
     });
 
-    console.log(`After db.connect inside beforeEach---${db}`);
-
     afterEach(function() { server.close(); });
   });
 
   describe('Database Schema:', function() {
-    console.log(`INSIDE DESCRIBE ---${db}`);
     it('contains a users table', function(done) {
-      console.log(`INSIDE IT, ${db}`);
       var queryString = 'SELECT * FROM users';
       db.query(queryString, function(err, results) {
         if (err) { return done(err); }
@@ -130,7 +124,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Account Creation:', function() {
+  describe('Account Creation:', function() {
 
     it('signup creates a new user record', function(done) {
       var options = {

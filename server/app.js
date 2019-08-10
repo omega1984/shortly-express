@@ -79,14 +79,30 @@ app.post('/links',
 /************************************************************/
 app.post('/signup',
   (req, res, next) => {
-    var username = req.body.username;
+    var usernameInput = req.body.username;
     var password = req.body.password;
 
-    return models.Users.create({ username, password })
-      .then(result => {
-        console.log(`Successfully created new user: ${username}!`);
-        res.send(result, 200);
-      });
+    models.Users.get({ username: usernameInput })
+      .then(usernameFromDB => {
+        // if user doesn't exist:
+        if (!usernameFromDB) {
+          // console.log(username.username)
+          models.Users.create({ username: usernameInput, password: password })
+          .then(result => {
+            res.redirect('/');
+            res.send(`Successfully created user ${usernameInput}!`, 200);
+          })
+          .catch(err => {
+            res.send(err.code)}
+          );
+        // if user exists:
+        } else {
+          // redirect
+          res.redirect('/signup');
+        }
+      })
+
+
   }); // app.post
 
 app.post('/login',
