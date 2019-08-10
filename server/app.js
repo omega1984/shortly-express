@@ -101,8 +101,6 @@ app.post('/signup',
           res.redirect('/signup');
         }
       })
-
-
   }); // app.post
 
 app.post('/login',
@@ -110,14 +108,31 @@ app.post('/login',
     var username = req.body.username;
     var password = req.body.password;
 
-    models.Users.get({ username }, 'salt')
-      .then(salt => {
-        if (!models.Users.compare( password, utils.createHash(password), salt )) {
-          res.send('Incorrect password. Please try again.');
+    models.Users.get({ username })
+    .then(result => {
+      // HASH from Database
+      // console.log(`1 ${password}`)
+      // console.log(`2 ${result.password}`)
+
+      // if username doesn't exist
+      if (result) {
+        // if password is incorrect
+        if (models.Users.compare( password, result.password, result.salt ) === false) {
+          res.set('location', '/login');
+          res.send('Incorrect password.');
+
+          // Password sucessful
         } else {
-          res.send(models.Users.compare( password, utils.createHash(password), salt ));
+          models.Users.compare( password, result.password, result.salt );
+          res.set('location', '/');
+          res.send('Logged in!');
         }
-      });
+      } else {
+        res.set('location', '/login');
+        res.send('Username does not exist.')
+      }
+
+    });
   }); // app.post
 
 /************************************************************/

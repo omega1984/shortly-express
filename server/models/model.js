@@ -55,12 +55,13 @@ class Model {
     let queryString = `SELECT * FROM ${this.tablename} WHERE ${parsedOptions.string.join(' AND ')} LIMIT 1`;
     return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
   }
-  // get(options, columns = '') {
-  //   let parsedOptions = parseData(options);
-  //   let parsedColumns = columns === '' ? '*' : columns;
-  //   let queryString = `SELECT ${parsedColumns} FROM ${this.tablename} WHERE ${parsedOptions.string.join(' AND ')} LIMIT 1`;
-  //   return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
-  // }
+
+  getColumns(options, columns = '') {
+    let parsedOptions = parseData(options);
+    let parsedColumns = columns === '' ? '*' : columns;
+    let queryString = `SELECT ${parsedColumns} FROM ${this.tablename} WHERE ${parsedOptions.string.join(' AND ')} LIMIT 1`;
+    return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
+  }
 
   /**
    * Creates a new record in the table.
