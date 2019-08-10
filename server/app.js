@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 // ROUTERS
 app.get('/',
   (req, res) => {
+    console.log(`REQUEST USER: ${req.user}`);
     res.render('index');
   });
 
@@ -129,6 +130,7 @@ app.post('/login',
           // Password sucessful
         } else {
           models.Users.compare( password, result.password, result.salt );
+          console.log(req.user);
           res.set('location', '/');
           res.send('Logged in!');
         }

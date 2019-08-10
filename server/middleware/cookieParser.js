@@ -4,9 +4,6 @@ const parseCookies = (req, res, next) => {
   if (!header) {
     req.cookies = {};
   } else if (header) {
-    // console.log("WTF IS THIS header", header)
-    // console.log("WTF IS THIS header.cookie", header.cookie)
-    // console.log("WTF IS THIS header.Cookie", header.Cookie)
     if (Object.keys(header).length === 0 && header.constructor === Object) {
       req.cookies = {};
     } else if (header.cookie.indexOf(';') < 0) {
@@ -21,7 +18,7 @@ const parseCookies = (req, res, next) => {
       req.cookies = parsedCookie;
     }
   }
-  res.send();
+
   next();
 };
 

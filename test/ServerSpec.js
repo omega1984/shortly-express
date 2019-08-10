@@ -372,7 +372,7 @@ describe('', function() {
       });
     });
 
-    xdescribe('Session Parser', function() {
+    describe('Session Parser', function() {
       it('initializes a new session when there are no cookies on the request', function(done) {
         var requestWithoutCookies = httpMocks.createRequest();
         var response = httpMocks.createResponse();
@@ -392,6 +392,7 @@ describe('', function() {
 
         createSession(requestWithoutCookie, response, function() {
           var cookies = response.cookies;
+          console.log("ENTERING COOKIE TEST")
           expect(cookies['shortlyid']).to.exist;
           expect(cookies['shortlyid'].value).to.exist;
           done();
